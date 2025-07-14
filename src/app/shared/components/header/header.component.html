@@ -1,0 +1,49 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- Logo/Brand -->
+    <div class="nav-logo">
+      <a [routerLink]="['/']" class="nav-logo-link">
+        <img *ngIf="logoUrl" [src]="logoUrl" [alt]="brandName" class="logo-img">
+        <span class="brand-text">{{ brandName }}</span>
+      </a>
+    </div>
+
+    <!-- Desktop Navigation Menu -->
+    <ul class="nav-menu" [class.active]="isMenuOpen">
+      <li class="nav-item" *ngFor="let item of menuItems">
+        <a [routerLink]="item.link" class="nav-link" routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.exact || false }" (click)="closeMenu()">
+          <i *ngIf="item.icon" [class]="item.icon"></i>
+          {{ item.label }}
+        </a>
+      </li>
+
+      <!-- User Actions (Login/Profile) -->
+      <li class="nav-item" *ngIf="showUserActions">
+        <div class="user-actions">
+          <button *ngIf="!isLoggedIn" class="btn btn-primary" (click)="onLogin()">
+            Login
+          </button>
+          <div *ngIf="isLoggedIn" class="user-profile">
+            <button class="profile-btn" (click)="toggleUserMenu()">
+              <img *ngIf="userAvatar" [src]="userAvatar" alt="User" class="avatar">
+              <span *ngIf="!userAvatar" class="avatar-placeholder">{{ userInitials }}</span>
+            </button>
+            <div class="user-dropdown" [class.show]="isUserMenuOpen">
+              <a href="#" (click)="onProfile($event)">Profile</a>
+              <a href="#" (click)="onSettings($event)">Settings</a>
+              <a href="#" (click)="onLogout($event)">Logout</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Mobile Hamburger Menu -->
+    <div class="nav-toggle" (click)="toggleMenu()">
+      <span class="bar" [class.active]="isMenuOpen"></span>
+      <span class="bar" [class.active]="isMenuOpen"></span>
+      <span class="bar" [class.active]="isMenuOpen"></span>
+    </div>
+  </div>
+</nav>

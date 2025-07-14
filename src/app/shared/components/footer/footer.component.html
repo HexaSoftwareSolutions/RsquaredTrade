@@ -1,0 +1,94 @@
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Main Footer Content -->
+        <div class="footer-content">
+            <!-- Company Info Section -->
+            <div class="footer-section company-info">
+                <div class="footer-logo">
+                    <img *ngIf="logoUrl" [src]="logoUrl" [alt]="companyName" class="footer-logo-img">
+                    <h3 class="footer-brand">{{ companyName }}</h3>
+                </div>
+                <p class="footer-description">{{ companyDescription }}</p>
+
+                <!-- Social Media Links -->
+                <div class="social-links" *ngIf="socialLinks.length > 0">
+                    <a *ngFor="let social of socialLinks" [href]="social.url" [attr.aria-label]="social.label"
+                        target="_blank" rel="noopener noreferrer" class="social-link">
+                        <i [class]="social.icon"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="footer-section" *ngIf="quickLinks.length > 0">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li *ngFor="let link of quickLinks">
+                        <a [routerLink]="link.route" class="footer-link">{{ link.label }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Services Section -->
+            <div class="footer-section" *ngIf="services.length > 0">
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li *ngFor="let service of services">
+                        <a [routerLink]="service.route" class="footer-link">{{ service.label }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Info Section -->
+            <div class="footer-section contact-info">
+                <h4 class="footer-title">Contact Info</h4>
+                <div class="contact-item" *ngIf="contactInfo.address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>{{ contactInfo.address }}</span>
+                </div>
+                <div class="contact-item" *ngIf="contactInfo.phone">
+                    <i class="fas fa-phone"></i>
+                    <a [href]="'tel:' + contactInfo.phone">{{ contactInfo.phone }}</a>
+                </div>
+                <div class="contact-item" *ngIf="contactInfo.email">
+                    <i class="fas fa-envelope"></i>
+                    <a [href]="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="footer-section newsletter" *ngIf="showNewsletter">
+                <h4 class="footer-title">Newsletter</h4>
+                <p class="newsletter-text">Subscribe to get updates and offers</p>
+                <form class="newsletter-form" (ngSubmit)="onNewsletterSubmit()" #newsletterForm="ngForm">
+                    <div class="newsletter-input-group">
+                        <input type="email" placeholder="Enter your email" [(ngModel)]="newsletterEmail" name="email"
+                            required email class="newsletter-input" #emailInput="ngModel">
+                        <button type="submit" class="newsletter-btn" [disabled]="!newsletterForm.valid">
+                            Subscribe
+                        </button>
+                    </div>
+                    <div class="input-error" *ngIf="emailInput.invalid && emailInput.touched">
+                        Please enter a valid email address
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p class="copyright">
+                    &copy; {{ currentYear }} {{ companyName }}. All rights reserved.
+                </p>
+                <div class="footer-bottom-links" *ngIf="bottomLinks.length > 0">
+                    <a *ngFor="let link of bottomLinks; let last = last" [routerLink]="link.route"
+                        class="footer-bottom-link">
+                        {{ link.label }}
+                        <span *ngIf="!last" class="separator">|</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
